@@ -290,65 +290,12 @@ public class Game : MonoBehaviour
         f[x][levels[x]] = 0;
     }
 
-    int turn8(int x, int y, ref List<List<int>> f)
+    int turn6(int x, int y, ref List<List<int>> f)
     {
         int len = max_length(x, y, pl_num, ref f);
         if (len >= GAME_TARGET_VALUE)
             return -200;
         return 5 + len;
-    }
-
-
-    int turn7(int x, int y, ref List<List<int>> f)
-    {
-        int len = max_length(x, y, ai_num, ref f);
-        if (len >= GAME_TARGET_VALUE)
-            return 250;
-        
-        int min = 1000;
-        for (int i = 1; i < width + 1; ++i)
-        {
-            int x1 = i;
-            int y1 = levels[i];
-            
-            int tmp = min / 2;
-            if (y1 < height + 1)
-            {
-                do_step(x1, pl_num, ref f);
-                tmp = turn8(x1, y1, ref f);
-                undo_step(x1, ref f);
-            }            
-            if (tmp < min) min = tmp;
-        }
-       
-        return min;
-    }
-
-    int turn6(int x, int y, ref List<List<int>> f)
-    {
-        int len = max_length(x, y, pl_num, ref f);
-        if (len >= GAME_TARGET_VALUE)
-            return -300;
-
-        int max = -1000;
-       
-        for (int i = 1; i < width + 1; ++i)
-        {
-            int x1 = i;
-            int y1 = levels[i];
-            int tmp = max / 2;
-            
-            if (y1 < height + 1)
-            {
-                do_step(x1, ai_num, ref f);
-                tmp = turn7(x1, y1, ref f);
-                undo_step(x1, ref f);
-            }
-
-            if (tmp > max) max = tmp;           
-        }
-        return max;
-        
     }
 
     int turn5(int x, int y, ref List<List<int>> f)
